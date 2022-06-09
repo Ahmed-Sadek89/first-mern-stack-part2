@@ -28,7 +28,7 @@ export const productSlice = createSlice({
             state.error = false
         },
         [getAllProducts.rejected]: (state) => {
-            state.loading = true;
+            state.loading = false;
             state.data = null
             state.error = true
         },

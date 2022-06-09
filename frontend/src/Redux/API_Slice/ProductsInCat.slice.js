@@ -26,7 +26,7 @@ export const productsInCatSlice = createSlice({
             state.error = false
         },
         [getAllProductsInCat.rejected]: (state) => {
-            state.loading = true;
+            state.loading = false;
             state.data = null
             state.error = true
         },

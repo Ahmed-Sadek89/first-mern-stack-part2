@@ -34,3 +34,14 @@ ul{
 img{
     max-width: 100%;
 }
+
+.errorMSG{
+    color: red;
+    font-size: 30px;
+    text-align: center;
+}
+
+.loadingContent{
+    display: flex;
+    flex-wrap: wrap;
+}

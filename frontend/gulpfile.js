@@ -18,10 +18,10 @@ task('watch', async () => {
             [
                 './src/Styles/SCSS/*.scss', 
                 './src/Components/**/*.scss',
-                'src/Components/**/*.jsx', 
+                './src/Components/**/*.jsx', 
                 './src/Pages/**/*.scss',
                 './src/Pages/**/*.jsx',
-                'src/App.js'
+                './src/App.js'
             ],
             series('sass')
         )
