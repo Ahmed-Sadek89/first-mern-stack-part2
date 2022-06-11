@@ -1,22 +1,36 @@
-import { memo, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import { memo, useState } from 'react'
 import { useLocation } from 'react-router-dom';
 import useProductsInCatHook from '../../Hooks/useProductsInCatHook';
-import { getAllProductsInCat } from '../../Redux/API_Slice/ProductsInCat.slice';
 import ProductsInCat from '../ProductsInCat/ProductsInCat';
 
 const ProductFilter = () => {
   console.log('hello i am ProductFilter components');
-  const dispatch = useDispatch()
-  const productsInCatState = useSelector(state => state.productsInCat);
   
   const location = useLocation();
   const catName = location.pathname.split('/')[2];
-  useEffect(() => {
-    dispatch(getAllProductsInCat(catName))
-  }, [dispatch, catName])
-  console.log(catName);
-  console.log(productsInCatState);
+  const products = useProductsInCatHook(catName)
+  
+  const [filteredData, setFilteredData] = useState({})
+  const [sortingData, setSortingData] = useState('newest');
+
+  const handleFilteredData = (e) => {
+    setFilteredData(() => {
+      if(e.target.value !== ''){
+        return {
+          ...filteredData,
+          [e.target.name]: e.target.value
+        }
+      }else{
+        delete filteredData[e.target.name]
+        return{
+          ...filteredData,
+        }
+      }
+    })
+  }
+
+  console.log(filteredData);
+  console.log(`sortingData ${sortingData}`);
   return (
     <>
       <div className='productFilter'>
@@ -26,43 +40,56 @@ const ProductFilter = () => {
               <div className="filterDetails">
                 <span>filter products</span>
                 <div className="select">
-                  <select className='colorSelect'>
-                    <option disabled >
+                  <select 
+                    className='colorSelect' 
+                    name="color"
+                    onChange={handleFilteredData}
+                  >
+                    <option disabled>
                       Color
                     </option>
-                    <option>White</option>
-                    <option>Black</option>
-                    <option>Red</option>
-                    <option>Blue</option>
-                    <option>Yellow</option>
-                    <option>Green</option>
+                    <option value=''>All</option>
+                    <option value="white">White</option>
+                    <option value="black">Black</option>
+                    <option value="red">Red</option>
+                    <option value="blue">Blue</option>
+                    <option value="yellow">Yellow</option>
+                    <option value="green">Green</option>
                   </select>
-                  <select>
-                    <option disabled >
+                  <select
+                    name="size"
+                    onChange={handleFilteredData}
+                  >
+                    <option disabled>
                       Size
                     </option>
-                    <option>XS</option>
-                    <option>S</option>
-                    <option>M</option>
-                    <option>L</option>
-                    <option>XL</option>
+                    <option value=''>All</option>
+                    <option value="xs">XS</option>
+                    <option value="sm">S</option>
+                    <option value="md">M</option>
+                    <option value="lg">L</option>
+                    <option value="xl">XL</option>
+                    <option value="xxl">2XL</option>
+                    <option value="3xl">3XL</option>
                   </select>
                 </div>
               </div>
               <div className="filterSort">
                 <span>sort products</span>
-                <select>
-                  <option >Newest</option>
-                  <option>Price (asc)</option>
-                  <option>Price (desc)</option>
+                <select onChange={(e) => setSortingData(e.target.value)} defaultValue={sortingData}>
+                  <option value="newest">Newest</option>
+                  <option value="asc">Price (asc)</option>
+                  <option value="desc">Price (desc)</option>
                 </select>
               </div>
             </div>
         </div>
       </div>
       <ProductsInCat
-        products={productsInCatState}
+        products={products}
         catName={catName}
+        filterdColorAndSize={filteredData}
+        sortingData={sortingData}
       />
     </>
   )

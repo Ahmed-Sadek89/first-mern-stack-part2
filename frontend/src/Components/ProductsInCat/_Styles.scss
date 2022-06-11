@@ -1,4 +1,4 @@
-.products{
+.productsInCat{
     padding: 1.5rem 0px;
     .productsContent{
         @include xs{
@@ -68,6 +68,11 @@
                     align-items: center;
                 }
             }
+        }
+        .noProducts{
+            color: $green;
+            font-size: 30px;
+            text-align: center;
         }
     }
 }

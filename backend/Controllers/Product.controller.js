@@ -61,7 +61,7 @@ const getAllProducts = async (req, res) => {
                     { $in: [categories] } 
             }).sort({_id: -1})
         } else {
-            products = await Product.find().sort({_id: -1})
+            products = await Product.find().sort({createdAt: -1})
         }
         res.status(200).json({
             status: 200, 
