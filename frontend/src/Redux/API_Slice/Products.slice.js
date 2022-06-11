@@ -5,7 +5,7 @@ import axios from 'axios';
 
 
 export const getAllProducts = createAsyncThunk("allProducts/add", async () => {
-    let res = await axios.get(`${apiLink}/api/product/getAll`)
+    let res = await axios.get(`${apiLink}/product/getAll`)
     return res.data;
 });
 

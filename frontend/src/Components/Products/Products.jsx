@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
-import { popularProducts} from '../../Assets/Data'
+import ItemsLoading from '../../Assets/ItemsLoading/ItemsLoading';
+
 const Products = ({products}) => {
   console.log('hello i am Products components');
   
@@ -12,6 +13,9 @@ const Products = ({products}) => {
   return (
     <div className='products'>
         <div className="container">
+          {
+            loading && <div className='loadingContent'><ItemsLoading /></div>
+          }
           <div className="productsContent">
             {data?.products.map(index => (
               <div className='content' key={index._id}>
@@ -34,6 +38,9 @@ const Products = ({products}) => {
               </div>
             ))}
           </div>
+          {
+            error && <h3 className='errorMSG'>something went error...</h3>
+          }
         </div>
     </div>
   )
