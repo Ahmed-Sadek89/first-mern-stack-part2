@@ -29,22 +29,22 @@ const ProductsInCat = ({
   }, [data?.products, catName, filterdColorAndSize]);
 
   useEffect(() => {
-    {/*error is here */}
-    if(sortingData === 'asc'){
+    if (sortingData === "newest") {
       setFirstFilteredData(
-        prev => {return prev?.sort((a, b) => b.price - a.price)}
-      )
-    } else if(sortingData === 'desc'){
+        firstFilteredData.sort((a, b) => a.createdAt - b.createdAt)
+      );
+    } else if (sortingData === "asc") {
       setFirstFilteredData(
-        prev => {return prev?.sort((a, b) => a.price - b.price)}
-      )
+        firstFilteredData.sort((a, b) => a.price - b.price)
+      );
     } else {
       setFirstFilteredData(
-        prev => {return prev?.sort((a, b) => b.createdAt - a.createdAt)}
-      )
+        firstFilteredData.sort((a, b) => b.price - a.price)
+      );
     }
-  }, [sortingData, firstFilteredData])
-  console.log(firstFilteredData);
+  }, [sortingData, firstFilteredData]);
+
+
   return (
     <div className='productsInCat'>
         <div className="container">
@@ -53,7 +53,7 @@ const ProductsInCat = ({
         }
           <div className="productsContent">
             {
-              firstFilteredData?.length !== 0 ?
+              data?.products || firstFilteredData ?
               firstFilteredData?.map(index => (
                 <div className='content' key={index._id}>
                   <div className="productShow">

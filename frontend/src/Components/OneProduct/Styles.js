@@ -1,5 +1,5 @@
 import styled from 'styled-components';
 
-export const SpanColor = styled.span`
+export const SpanColor = styled.a`
     background-color: ${props => props.color};
 `;

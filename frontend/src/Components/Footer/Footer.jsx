@@ -70,7 +70,7 @@ const Footer = () => {
                         <MailOutlineIcon />
                         <span>contact@sadek.dev</span>
                     </div>
-                    <img src="https://i.ibb.co/Qfvn4z6/payment.png" />
+                    <img alt='payment' src="https://i.ibb.co/Qfvn4z6/payment.png" />
                 </div>
             </div>
         </div>

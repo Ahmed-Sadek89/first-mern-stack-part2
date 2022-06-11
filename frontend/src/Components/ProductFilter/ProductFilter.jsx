@@ -11,7 +11,7 @@ const ProductFilter = () => {
   const products = useProductsInCatHook(catName)
   
   const [filteredData, setFilteredData] = useState({})
-  const [sortingData, setSortingData] = useState('newest');
+  const [sortingData, setSortingData] = useState('');
 
   const handleFilteredData = (e) => {
     setFilteredData(() => {
@@ -29,8 +29,6 @@ const ProductFilter = () => {
     })
   }
 
-  console.log(filteredData);
-  console.log(`sortingData ${sortingData}`);
   return (
     <>
       <div className='productFilter'>
