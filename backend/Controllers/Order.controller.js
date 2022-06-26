@@ -5,7 +5,8 @@ const createOrder = async (req, res) => {
     try {
         const newOrder = await new Order(req.body);
         await newOrder.save();
-        res.status(200).json({status: 200, newOrder})
+        const {_id, ...others} = newOrder._doc
+        res.status(200).json({status: 200, newOrder: others})
     } catch(error) {
         res.status(500).json({status: 500, message: error.message})
     }

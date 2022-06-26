@@ -6,14 +6,16 @@ import Navbar from '../../Components/Navbar/Navbar'
 import Newsletter from '../../Components/Newsletter/Newsletter'
 import SADEK from '../../Components/SADEK/SADEK';
 
-const Cart = () => {
+
+const Cart = ({cart}) => {
   console.log('hello i am card page');
+  const {data} = cart
   return (
     <>
-        <Navbar />
+        <Navbar cart={data?.status === 200 && data?.count} />
         <Announcement />
 
-        <CartComponent />
+        <CartComponent cart={cart} />
         
         <Newsletter />
         <Footer />

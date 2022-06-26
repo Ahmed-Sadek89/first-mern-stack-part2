@@ -85,6 +85,7 @@
             }
             .cartItemContent{
                 display: flex;
+                position: relative;
                 gap: 20px;margin: 20px 0px;
                 @include xs{
                     flex-flow: column nowrap;
@@ -94,6 +95,14 @@
                 @include md{
                     flex-flow: row nowrap;
                     align-items: center;
+                }
+                .loadingState{
+                    background: gray;
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    opacity: 0.6;
+                    cursor: wait;
                 }
                 .cartImg{
                     width: 200px;
@@ -135,6 +144,15 @@
                     }
                     h3{
                         font-weight: normal;
+                    }
+                    .update{
+                        padding: 20px 30px;
+                        margin-top: 20px;
+                        text-transform: uppercase;
+                        color: white;
+                        background: teal;
+                        font-weight: bold;
+                        letter-spacing: 3px;
                     }
                 }
             }

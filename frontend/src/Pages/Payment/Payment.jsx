@@ -9,6 +9,7 @@ const stripeTestPromise = loadStripe(PUBLIC_KEY);
 
 const Payment = () => {
   console.log('hello i am Payment page');
+ 
   return (
     <div className='formPayment'>
         <Elements stripe={stripeTestPromise}>

@@ -7,11 +7,12 @@ import ProductFilter from '../../Components/ProductFilter/ProductFilter'
 // import Products from '../../Components/Products/Products'
 import SADEK from '../../Components/SADEK/SADEK'
 
-const ProductList = () => {
+const ProductList = ({cart}) => {
   console.log('hello i am ProductList page');
+  const {data} = cart
   return (
     <>
-      <Navbar />
+      <Navbar cart={data?.status === 200 && data?.count} />
       <Announcement />
 
       <ProductFilter/>

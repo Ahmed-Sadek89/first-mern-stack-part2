@@ -10,6 +10,7 @@ const {
     createCart,
     updateCartById,
     deleteCartById,
+    deleteCartByUserId,
     getCartByUserId,
     getAllCarts
 } = require('../Controllers/Cart.controller');
@@ -18,7 +19,7 @@ const {
 // CREATE
 router.post(
     '/add', 
-    verifyTokenAndAuthorization, 
+    verifyTokenAndAuthorization,
     bodyParser,
     createCart
 )
@@ -31,11 +32,18 @@ router.put(
     updateCartById
 )
 
-// DELETE
+// DELETE ONE ITEM IN CART
 router.delete(
     '/delete/:id', 
     verifyTokenAndAuthorization, 
     deleteCartById
+)
+
+// DELETE THE CART OF USER_ID
+router.delete(
+    '/delete/userID/:id', 
+    verifyTokenAndAuthorization, 
+    deleteCartByUserId
 )
 
 // // GET Cart
