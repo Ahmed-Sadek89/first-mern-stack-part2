@@ -3,8 +3,20 @@ import axios from "axios";
 import { CardElement, useElements, useStripe} from "@stripe/react-stripe-js";
 import { useState } from 'react'
 import {useNavigate} from 'react-router-dom';
+import useCartHook from "../../Hooks/useCartHook";
+import { useDispatch } from "react-redux";
+import { deleteCartByUserID } from "../../Redux/API_Slice/CartDeleteUserID.slice";
+import getCookie from "../../Hooks/getCookie";
+import { getCart } from "../../Redux/API_Slice/CartGet.slice";
+import { postOrder } from "../../Redux/API_Slice/OrderAdd.slice";
 
 const usePaymentHook = () => {
+    // get cart total price
+    const {data} = useCartHook();
+    const dispatch = useDispatch()
+    const totalPriceInCart = data?.cart.reduce((curr, acc) => {
+        return curr + (acc.cart.price * acc.cart.quantity)
+    }, 0)
     // All required Hooks
     // stripe hooks
     const stripe = useStripe();
@@ -18,10 +30,13 @@ const usePaymentHook = () => {
     const navigate = useNavigate();
 
     // consoles
-    console.log('paymentProccessing ',  paymentProccessing);
-    console.log('paymentErrorMSG ' ,paymentErrorMSG);
-    console.log(stripe);
-  
+    // console.log('paymentProccessing ',  paymentProccessing);
+    // console.log('paymentErrorMSG ' ,paymentErrorMSG);
+    // console.log(stripe);
+    let cartItem = [];
+    data?.cart.map((index) => {
+        return cartItem.push(index.cart)
+    })
     // on submit payment
     const handlePayment = async (e) => {
 
@@ -45,29 +60,47 @@ const usePaymentHook = () => {
             card: elements.getElement(CardElement),
             billing_details
         });
-        console.log(paymentMethod ? {paymentMethod} : null);
+        // console.log(paymentMethod ? {paymentMethod} : null);
         
 
         // make your API payment request if no error
         if (!error) {
-            try {
-                const { id } = paymentMethod;
-                const response = await axios.post(
-                    `${apiLink}/api/checkout/payment`,
-                        {
-                        amount: 999,
-                        id: id,
-                        }
-                );
+            const { id } = paymentMethod;
+            const OrderPayload = {
+                userId: JSON.parse(getCookie('userID')),
+                products: [
+                    ...cartItem
+                ],
+                amount: data?.cart.reduce((curr, acc) => curr + acc.cart.quantity, 0),
+                address: billing_details.address,
+            }
+            const res = await axios.post(
+                `${apiLink}/checkout/payment`,
+                    {
+                    amount: totalPriceInCart,
+                    id: id,
+                    }
+            ).then((response) => {
                 if (response.data.success) {
                     setPaymentErrorMSG('')
                     setPaymentProccessing(true)
                     navigate('/success')
                 }
-            } catch (error) {
+            })
+            .then(() => {
+                dispatch(postOrder(OrderPayload))
+            }) 
+            .then(() => {
+                dispatch(deleteCartByUserID(JSON.parse(getCookie('userID'))))
+            })
+            .then(() => {
+                dispatch(getCart(JSON.parse(getCookie('userID'))))
+            })
+            .catch(error => {
                 setPaymentErrorMSG(error.message)
                 setPaymentProccessing(false)
-            }
+            })
+            return res
         } else {
             console.log(error.message);
             setPaymentErrorMSG(error.message)

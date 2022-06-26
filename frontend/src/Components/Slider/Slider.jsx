@@ -13,7 +13,6 @@ const Slider = () => {
           } else {
             setSlideShow(slideShow < 2 ? slideShow + 1 : 0);
           }
-        console.log(slideShow);
     }
     return (
         <div className='slider'>

@@ -10,12 +10,13 @@ import SADEK from "../../Components/SADEK/SADEK"
 // libs
 import { memo } from "react"
 
-const Home = ({products}) => {
+const Home = ({products, cart}) => {
   console.log('hello i am home page');
+  const {data} = cart
   return (
     <>
       <Announcement />
-      <Navbar />
+      <Navbar cart={data?.status === 200 && data?.count} />
       <Slider />
       <Categories />
       <Products products={products}/>

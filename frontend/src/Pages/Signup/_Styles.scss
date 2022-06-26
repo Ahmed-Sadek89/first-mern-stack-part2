@@ -48,9 +48,21 @@
             @include sm{
                 flex-direction: row;
             }
-            input{
+            div{
                 flex: 1;
-                margin-bottom: 10px;
+                @include xs{
+                    margin-bottom: 0px;
+                }
+                @include sm{
+                    margin-bottom: 10px;
+                }
+                input{
+                    width: 100%;
+                }
+                p{
+                    color: red;
+                    font-style: italic;
+                }
             }
         }
         p{
@@ -61,17 +73,29 @@
             @include sm{
                 font-size: 14px;
             }
-    }
+        }
         button{
-            background-color: teal;
             text-transform: uppercase;
-            color: white;
+            color: $white;
             @include xs{
                 padding: 15px 20px;
             }
             @include sm{
                 padding: 15px 60px;
-            }
+            } 
+        }
+        .signupBtn{
+            background-color: teal;
+        }
+        .loadingBtn{
+            background: gray;
+            cursor: not-allowed;
+        }
+        .errMsg{
+            color: red;
+            margin: 0px 5px;
+            font-style: italic;
+            font-weight: bold;
         }
     }
 }

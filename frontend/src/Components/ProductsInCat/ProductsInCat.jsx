@@ -31,15 +31,15 @@ const ProductsInCat = ({
   useEffect(() => {
     if (sortingData === "newest") {
       setFirstFilteredData(
-        firstFilteredData.sort((a, b) => a.createdAt - b.createdAt)
+        firstFilteredData?.sort((a, b) => a.createdAt - b.createdAt)
       );
     } else if (sortingData === "asc") {
       setFirstFilteredData(
-        firstFilteredData.sort((a, b) => a.price - b.price)
+        firstFilteredData?.sort((a, b) => a.price - b.price)
       );
     } else {
       setFirstFilteredData(
-        firstFilteredData.sort((a, b) => b.price - a.price)
+        firstFilteredData?.sort((a, b) => b.price - a.price)
       );
     }
   }, [sortingData, firstFilteredData]);
